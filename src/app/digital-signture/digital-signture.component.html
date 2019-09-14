@@ -1,0 +1,73 @@
+<div class="container">
+  <div class="row col-centered">
+    <div class="col-md-12">
+      <h4 class="modal-title">
+        New Document </h4>
+      <p class="modal-intro">Enter the required values below.</p>
+      <div class="input-group" style="width: 250px; visibility: hidden;" id="btnTypeing">
+        <input type="text" id="mySignature" [(ngModel)]="singature" placeholder="Type here ..">
+        <span class="input-group-append">
+          <button class="btn btn-danger input-group-text" (click)="finishTyping()">
+            Add
+          </button>
+        </span>
+      </div>
+      <!-- <input [(ngModel)]="singature" style="font-size: 48px ;" hidden="true" id="mySignature">
+          <button class="btn btn-outline-secondary" style="visibility: hidden;" (click)="finishTyping()" id="btnTypeing" hidden> add</button> -->
+      <form>
+        <h3>Upload any file</h3>
+
+        <div class="form-group">
+          <label class="custom-file text-xs-left">
+            <span class="required">*</span>
+            <input type="file" accept="application/pdf" #fileupload name="myFile"
+              (change)="fileChange(fileupload.files)">
+            <span class="form-control-file"></span>
+          </label>
+        </div>
+        <div *ngIf="!isSigned">
+          <span *ngIf="docReady">Page {{pageNumber}} of {{totalPages}}</span>
+          <div class="container" id="main">
+            <canvas id="main-canvas"></canvas>
+          </div>
+          <div class="form-group" *ngIf="docReady">
+            <div class="row">
+              <div class="col-xs-4">
+                  <input type="button" value="Previous" class=" form-control btn btn-warning col-sm-1"
+                  (click)="changePagePrevious()">
+              </div>
+              <div class="col-xs-4">
+                  <input type="button" value="Next" class="form-control btn btn-warning col-sm-1" (click)="changePageNext()">
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="dropdown ghost-dropdown">
+                <div class="col-xs-4">
+                    <input type="buton" value="Sign" class="form-control btn btn-primary col-sm-1" type="button" (click)="drawSign()">
+                </div>
+                <!-- <ul class="dropdown-menu">
+                        <li class="dropdown-item" (click)="drawSign()">
+                          <i class="fas fa-pencil-alt">Draw</i>
+                        </li>
+                        <li class="dropdown-item" (click)="typeSign()">
+                          <i class="far fa-keyboard">Type</i>
+                        </li>
+                      </ul> -->
+              </div>
+              <div class="col-xs-4">
+                  <input type="button" value="Save" *ngIf="edited" class="form-control btn btn-primary col-sm-1" (click)="Save()">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-2">
+            <input type="button" value="Cancel" (click)="onCancle()" class="form-control btn btn-danger col-sm-1">
+        </div>
+        <div *ngIf="pdfFileId" class="col-xs-2">
+            <input type="button" value="Confirm" (click)="sendToAPI(myForm);" type="submit" class="form-control btn btn-success col-sm-1">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
